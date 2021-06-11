@@ -25,6 +25,14 @@
        }
  
        if (this.field_150746_k.eventLoop().inEventLoop()) {
+@@ -248,6 +_,7 @@
+    public void func_150718_a(ITextComponent p_150718_1_) {
+       if (this.field_150746_k.isOpen()) {
+          this.field_150746_k.close().awaitUninterruptibly();
++         field_150735_g.debug("Disconnecting " + this.field_150743_l.toString(), new java.io.IOException());
+          this.field_150742_o = p_150718_1_;
+       }
+ 
 @@ -259,7 +_,9 @@
  
     @OnlyIn(Dist.CLIENT)
@@ -35,6 +43,18 @@
        Class<? extends SocketChannel> oclass;
        LazyValue<? extends EventLoopGroup> lazyvalue;
        if (Epoll.isAvailable() && p_181124_2_) {
+@@ -275,9 +_,10 @@
+             try {
+                p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, true);
+             } catch (ChannelException channelexception) {
++                field_150735_g.debug("Recieved ChannelException for InetAddress " + p_181124_0_, channelexception);
+             }
+ 
+-            p_initChannel_1_.pipeline().addLast("timeout", new ReadTimeoutHandler(30)).addLast("splitter", new NettyVarint21FrameDecoder()).addLast("decoder", new NettyPacketDecoder(PacketDirection.CLIENTBOUND)).addLast("prepender", new NettyVarint21FrameEncoder()).addLast("encoder", new NettyPacketEncoder(PacketDirection.SERVERBOUND)).addLast("packet_handler", networkmanager);
++            p_initChannel_1_.pipeline().addLast("timeout", new ReadTimeoutHandler(30, java.util.concurrent.TimeUnit.MINUTES)).addLast("splitter", new NettyVarint21FrameDecoder()).addLast("decoder", new NettyPacketDecoder(PacketDirection.CLIENTBOUND)).addLast("prepender", new NettyVarint21FrameEncoder()).addLast("encoder", new NettyPacketEncoder(PacketDirection.SERVERBOUND)).addLast("packet_handler", networkmanager);
+          }
+       }).channel(oclass).connect(p_181124_0_, p_181124_1_).syncUninterruptibly();
+       return networkmanager;
 @@ -286,6 +_,7 @@
     @OnlyIn(Dist.CLIENT)
     public static NetworkManager func_150722_a(SocketAddress p_150722_0_) {

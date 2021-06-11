@@ -15,6 +15,23 @@
           this.func_147326_c();
        } else if (this.field_147328_g == ServerLoginNetHandler.State.DELAY_ACCEPT) {
           ServerPlayerEntity serverplayerentity = this.field_147327_f.func_184103_al().func_177451_a(this.field_147337_i.getId());
+@@ -66,7 +_,7 @@
+          }
+       }
+ 
+-      if (this.field_147336_h++ == 600) {
++      if (this.field_147336_h++ == Integer.MAX_VALUE) {
+          this.func_194026_b(new TranslationTextComponent("multiplayer.disconnect.slow_login"));
+       }
+ 
+@@ -117,6 +_,7 @@
+ 
+    public void func_147231_a(ITextComponent p_147231_1_) {
+       field_147332_c.info("{} lost connection: {}", this.func_147317_d(), p_147231_1_.getString());
++      field_147332_c.info("Logging IOException.", new java.io.IOException());
+    }
+ 
+    public String func_147317_d() {
 @@ -130,7 +_,7 @@
           this.field_147328_g = ServerLoginNetHandler.State.KEY;
           this.field_147333_a.func_179290_a(new SEncryptionRequestPacket("", this.field_147327_f.func_71250_E().getPublic().getEncoded(), this.field_147330_e));

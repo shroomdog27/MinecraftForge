@@ -1,5 +1,14 @@
 --- a/net/minecraft/network/play/ServerPlayNetHandler.java
 +++ b/net/minecraft/network/play/ServerPlayNetHandler.java
+@@ -245,7 +_,7 @@
+ 
+       this.field_147367_d.func_213185_aS().func_76320_a("keepAlive");
+       long i = Util.func_211177_b();
+-      if (i - this.field_194402_f >= 15000L) {
++      if (i - this.field_194402_f >= Long.MAX_VALUE) {
+          if (this.field_194403_g) {
+             this.func_194028_b(new TranslationTextComponent("disconnect.timeout"));
+          } else {
 @@ -391,9 +_,11 @@
              }
  
